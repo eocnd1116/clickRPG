@@ -41,9 +41,9 @@
     
 
 
-    // 인게임 - 버튼
+    // 인게임 - 돌 버튼
     document.write("<button onclick=bt_getStone() onmouseover=bt_getStoneSign() onmouseout=bt_getStoneSignOut() id='bt_getStone'>[ <span style='text-decoration: underline;'>S</span>tone mining <span class='autoGoldText'></span> ]</button>");
-    document.write("<span id='bt_getStoneSign' class='nono'> <span style='background-color:#e0e0e0;' id='buttonSign1' class='buttonSignC_Stone'>+<span id='stoneBoxSt'></span> STONE</span> <span style='background-color:#ffff80;' id='buttonSign2' class='buttonSignC_Stone'>+<span id='stoneBoxGo'></span> GOLD at <span id='stoneBox'></span>%</span> </span></span></span>\n\n");
+    document.write("<span id='bt_getStoneSign' class='nono'> <span style='background-color:#e0e0e0;color:#000000' class='buttonSignC_Stone'>+<span id='stoneBoxSt'></span> STONE</span> <span style='background-color:#ffff80;color:#000000' class='buttonSignC_Stone'>+<span id='stoneBoxGo'></span> GOLD at <span id='stoneBox'></span>%</span> </span></span></span>\n\n");
     function bt_getStoneSign() { bt_Sign('bt_getStoneSign', 'buttonSignC_Stone'); }
     function bt_getStoneSignOut() { bt_SignOut('bt_getStoneSign', 'buttonSignC_Stone'); } bt_getStoneSignOut();
     function bt_getStone() {
@@ -55,8 +55,8 @@
     }
 
     //Q
-    document.write(" <button onclick=bt_buttonQ() onmouseover=bt_buttonQSign() onmouseout=bt_buttonQSignOut() id='bt_buttonQ'>[ <span style='text-decoration: underline;'>Q</span>.Stone upgrade+<span id='stoneBoxQ'></span> <span style='background-color:#e0e0e0'>-<span id='buttonQCost'></span></span> ]</button>");
-    document.write("<span id='bt_buttonQSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Stone + 1", "buttonSignC_buttonQ")+"</span>");
+    document.write("<pre>                                        ⠀⠀⠀<button onclick=bt_buttonQ() onmouseover=bt_buttonQSign() onmouseout=bt_buttonQSignOut() id='bt_buttonQ'>[ <span style='text-decoration: underline;'>Q</span>.Stone upgrade+<span id='stoneBoxQ'></span> <span style='background-color:#e0e0e0'>-<span id='buttonQCost'></span></span> ]</button>");
+    document.write("<span id='bt_buttonQSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Stone + 1", "buttonSignC_buttonQ")+"</span></pre>\n\n");
     function bt_buttonQSign() { bt_Sign('bt_buttonQSign', 'buttonSignC_buttonQ'); }
     function bt_buttonQSignOut() { bt_SignOut('bt_buttonQSign', 'buttonSignC_buttonQ'); } bt_buttonQSignOut();
     function bt_buttonQ() {
@@ -69,12 +69,12 @@
     }
     
     //W
-    document.write("<pre>                                       ⠀⠀⠀<button onclick=bt_buttonW() onmouseover=bt_buttonWSign() onmouseout=bt_buttonWSignOut() id='bt_buttonW'>[ <span style='text-decoration: underline;'>W</span>.Gold upgrade+<span id='stoneBoxW'></span> <span style='background-color:#ffff00'>-<span id='buttonWCost'></span></span> ]</button>");
+    document.write("<pre>                                        ⠀⠀⠀<button onclick=bt_buttonW() onmouseover=bt_buttonWSign() onmouseout=bt_buttonWSignOut() id='bt_buttonW'>[ <span style='text-decoration: underline;'>W</span>.Gold upgrade+<span id='stoneBoxW'></span> <span style='background-color:#ffff00'>-<span id='buttonWCost'></span></span> ]</button>");
     document.write("<span id='bt_buttonWSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Gold increasing 10% probability + 1", "buttonSignC_buttonW")+"</span></pre>\n\n");
     function bt_buttonWSign() { bt_Sign('bt_buttonWSign', 'buttonSignC_buttonW'); }
     function bt_buttonWSignOut() { bt_SignOut('bt_buttonWSign', 'buttonSignC_buttonW'); } bt_buttonWSignOut();
     function bt_buttonW() {
-        if ( gold >= 40*(3**stoneW) ) {
+        if ( gold >= 40*(3**stoneW)&&stoneW<10 ) {
             gold -= 40*(3**stoneW);
             stoneW++;
         }
@@ -82,7 +82,7 @@
     }
 
     //E
-    document.write("<pre>                                       ⠀⠀⠀<button onclick=bt_buttonE() onmouseover=bt_buttonESign() onmouseout=bt_buttonESignOut() id='bt_buttonE'>[ <span style='text-decoration: underline;'>E</span>.Auto upgrade+<span id='stoneBoxE'></span> <span style='background-color:#e0e0e0'>-<span id='buttonECost'></span></span> ]</button>");
+    document.write("<pre>                                        ⠀⠀⠀<button onclick=bt_buttonE() onmouseover=bt_buttonESign() onmouseout=bt_buttonESignOut() id='bt_buttonE'>[ <span style='text-decoration: underline;'>E</span>.Auto upgrade+<span id='stoneBoxE'></span> <span style='background-color:#e0e0e0'>-<span id='buttonECost'></span></span> ]</button>");
     document.write("<span id='bt_buttonESign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get auto Stone + 1", "buttonSignC_buttonE")+"</span></pre>\n\n");
     function bt_buttonESign() { bt_Sign('bt_buttonESign', 'buttonSignC_buttonE'); }
     function bt_buttonESignOut() { bt_SignOut('bt_buttonESign', 'buttonSignC_buttonE'); } bt_buttonESignOut();
@@ -96,7 +96,7 @@
     }
 
     //R 
-    document.write("<pre>                                       ⠀⠀⠀<button onclick=bt_buttonR() onmouseover=bt_buttonRSign() onmouseout=bt_buttonRSignOut() id='bt_buttonR'>[ <span style='text-decoration: underline;'>R</span>.Gold2 upgrade+<span id='stoneBoxR'></span> <span style='background-color:#ffff00'>-<span id='buttonRCost'></span></span> ]</button>");
+    document.write("<pre>                                        ⠀⠀⠀<button onclick=bt_buttonR() onmouseover=bt_buttonRSign() onmouseout=bt_buttonRSignOut() id='bt_buttonR'>[ <span style='text-decoration: underline;'>R</span>.Gold2 upgrade+<span id='stoneBoxR'></span> <span style='background-color:#ffff00'>-<span id='buttonRCost'></span></span> ]</button>");
     document.write("<span id='bt_buttonRSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Gold amount + 1", "buttonSignC_buttonR")+"</span></pre>\n\n");
     function bt_buttonRSign() { bt_Sign('bt_buttonRSign', 'buttonSignC_buttonR'); }
     function bt_buttonRSignOut() { bt_SignOut('bt_buttonRSign', 'buttonSignC_buttonR'); } bt_buttonRSignOut();
@@ -114,22 +114,23 @@
         var element = document.getElementById(_id);
         element.className = "nono";
 
-        var element = document.getElementById('buttonSign1');
-        if ( element != null && element.className == _class) {element.style.backgroundColor = "#e0e0e0"; element.style.color = "#000000";}
-        var element = document.getElementById('buttonSign2');
-        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffff80"; element.style.color = "#000000";}
-        var element = document.getElementById('buttonSign3');
-        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffC0ff"; element.style.color = "#000000";}
+        //var element = document.getElementById('buttonSign1');
+        //if ( element != null && element.className == _class) {element.style.backgroundColor = "#e0e0e0"; element.style.color = "#000000";}
+        //var element = document.getElementById('buttonSign2');
+        //if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffff80"; element.style.color = "#000000";}
+        //var element = document.getElementById('buttonSign3');
+        //if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffC0ff"; element.style.color = "#000000";}
     }
     function bt_SignOut(_id, _class) {
         var element = document.getElementById(_id);
         element.className = "buttonHide";
-        var element = document.getElementById('buttonSign1');
-        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
-        var element = document.getElementById('buttonSign2');
-        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
-        var element = document.getElementById('buttonSign3');
-        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
+
+        //var element = document.getElementById('buttonSign1');
+        //if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
+        //var element = document.getElementById('buttonSign2');
+        //if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
+        //var element = document.getElementById('buttonSign3');
+        //if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
     }
 
     // 인게임 - 단축키 ( alt )
@@ -219,12 +220,18 @@
         document.getElementById("stoneBoxSt").textContent = 1+stoneQ;
         document.getElementById("stoneBoxGo").textContent = 1+stoneR;
         document.getElementById("stoneBoxQ").textContent = stoneQ;
-        document.getElementById("stoneBoxW").textContent = stoneW;
-        document.getElementById("stoneBoxE").textContent = stoneE;
-        document.getElementById("stoneBoxR").textContent = stoneR;
         document.getElementById("buttonQCost").textContent = 100*(2**stoneQ);
-        document.getElementById("buttonWCost").textContent = 40*(3**stoneW);
+        if (stoneW<10) {
+            document.getElementById("stoneBoxW").textContent = stoneW;
+            document.getElementById("buttonWCost").textContent = 40*(3**stoneW);
+        }
+        else {
+            document.getElementById("stoneBoxW").textContent = "MAX";
+            document.getElementById("buttonWCost").textContent = 0;
+        }
+        document.getElementById("stoneBoxE").textContent = stoneE;
         document.getElementById("buttonECost").textContent = 1000*(2**stoneE);
+        document.getElementById("stoneBoxR").textContent = stoneR;
         document.getElementById("buttonRCost").textContent = 500*(3**stoneR);
         
         document.getElementById("pickaxeName").textContent = pickaxeName[pickaxeType]+"+"+pickaxeEvo[pickaxeType]+"⠀⠀";
