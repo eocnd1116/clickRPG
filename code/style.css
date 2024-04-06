@@ -1,0 +1,60 @@
+body {
+    font-family : monospace;
+    margin : 0px;
+    cursor: default;
+}
+
+.autoGoldText {
+    color : #808080;
+}
+
+.uiText {
+    background-color : #404040;
+    color : #ffffff;
+}
+.uiInText {
+    background-color : #d0d0d0;
+}
+
+.saveText {
+    background-color : #FFFFFF;
+    position: fixed;
+    bottom: 4px;
+    left: 4px;
+}
+.resetText {
+    background-color : #FFFFFF;
+    position: fixed;
+    bottom: 4px;
+    left: 50px;
+}
+
+.blueText {
+    background-color : #0000bb;
+    color : #ffffff;
+}
+button {
+    border: 0;
+    background-color: transparent;
+    font-family : monospace;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+button:active {
+    background-color: #0000FF;
+    color: #FFFFFF;
+}
+.buttonHide {
+    color : #FFFFFF !important;
+    background-color : #FFFFFF !important;
+}
+.nono {
+    color : #000000;
+}
+
+pre{
+    margin : 0px;
+}

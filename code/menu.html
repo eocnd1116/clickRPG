@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>돌 캐서 마왕 잡는 게임</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="func.js"></script>  <!--함수-->
+    <script src="reset.js"></script> <!--변수 초기화-->
+</head>
+<body>
+    <script>
+    // 맨 아래 툴바
+    document.write("<span class='saveText'><button onclick=cookieSave()><span class='blueText'>save</span></button></span>");
+    document.write("<span class='resetText'><button onclick=bt_cokialldel()><span class='blueText'>reset</span></button></span>");
+    function bt_cokialldel() {
+        var domain = domain || document.domain;
+        var path = path || '/';
+    
+        var cookies = document.cookie.split('; ');
+        var expiration = 'Sat, 01 Jan 1972 00:00:00 GMT';
+    
+        if (document.cookie) {
+            for (i = 0; i < cookies.length; i++) {
+                document.cookie = cookies[i].split('=')[0] + '=; path=/; expires=' + expiration;
+            }
+        }
+        var cookies = document.cookie.split('; ');
+        window.location.reload();
+    }
+    
+    // 맨 위 인터페이스
+    document.write("<pre><span class='uiText'>┌[INVENTORY]-"+"-".repeat(24)+"┐</span>  <span class='uiText'>┌[PICKAXE]-"+"-".repeat(30)+"┐</span><br>");
+    document.write("│ <span id='stoneTColor' style='background-color : #FFFFFF;'><span id='stoneT'></span></span> <span id='stone'></span> <span class='autoGoldText'><span id='plusStone'></span></span><span id='stoneLen'></span>│  │<span style='background-color:#e0e0e0'><span id='pickaxeName'></span><span id='pickaxe1'></span></span>|<br>");
+    document.write("│ <span id='goldTColor' style='background-color : #FFFFFF;'><span id='goldT'></span></span> <span id='gold'></span> <span class='autoGoldText'><span id='plusGold'></span></span><span id='goldLen'></span>│  │<span style='color:#ff8000'><span id='pickaxeEvo'></span><span id='pickaxe2'></span></span>|<br>");
+    document.write("│ <span id='gemTColor' style='background-color : #FFFFFF;'><span id='gemT'></span></span> <span id='gem'></span> <span class='autoGoldText'><span id='plusGem'></span></span><span id='gemLen'></span>│  │<span style='color:#000000'><span id='pickaxeUpgrade'></span><span id='pickaxe3'></span></span>|<br>");
+    document.write("└------------"+"-".repeat(24)+"┘  └----------"+"-".repeat(30)+"┘<br><br>");
+    document.write("<span style='background-color:#808080'>"+"-".repeat(30)+"</span>");
+    document.write("<span style='background-color:#808080'>"+"-".repeat(10)+"</span>");
+    document.write("<span style='background-color:#808080'>"+"-".repeat(30)+"</span></pre><br><br>");
+    
+
+
+    // 인게임 - 버튼
+    document.write("<button onclick=bt_getStone() onmouseover=bt_getStoneSign() onmouseout=bt_getStoneSignOut() id='bt_getStone'>[ <span style='text-decoration: underline;'>S</span>tone mining <span class='autoGoldText'></span> ]</button>");
+    document.write("<span id='bt_getStoneSign' class='nono'> <span style='background-color:#e0e0e0;' id='buttonSign1' class='buttonSignC_Stone'>+<span id='stoneBoxSt'></span> STONE</span> <span style='background-color:#ffff80;' id='buttonSign2' class='buttonSignC_Stone'>+<span id='stoneBoxGo'></span> GOLD at <span id='stoneBox'></span>%</span> </span></span></span>\n\n");
+    function bt_getStoneSign() { bt_Sign('bt_getStoneSign', 'buttonSignC_Stone'); }
+    function bt_getStoneSignOut() { bt_SignOut('bt_getStoneSign', 'buttonSignC_Stone'); } bt_getStoneSignOut();
+    function bt_getStone() {
+        stone += getStone;
+        if (Math.random() <= 0.1+(stoneW/10)) {
+            gold += getGold;
+        }
+        update();
+    }
+
+    //Q
+    document.write(" <button onclick=bt_buttonQ() onmouseover=bt_buttonQSign() onmouseout=bt_buttonQSignOut() id='bt_buttonQ'>[ <span style='text-decoration: underline;'>Q</span>.Stone upgrade+<span id='stoneBoxQ'></span> <span style='background-color:#e0e0e0'>-<span id='buttonQCost'></span></span> ]</button>");
+    document.write("<span id='bt_buttonQSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Stone + 1", "buttonSignC_buttonQ")+"</span>");
+    function bt_buttonQSign() { bt_Sign('bt_buttonQSign', 'buttonSignC_buttonQ'); }
+    function bt_buttonQSignOut() { bt_SignOut('bt_buttonQSign', 'buttonSignC_buttonQ'); } bt_buttonQSignOut();
+    function bt_buttonQ() {
+        if ( stone >= 100*(2**stoneQ) ) {
+            stone -= 100*(2**stoneQ);
+            stoneQ++;
+            getStone++;
+        }
+        update();
+    }
+    
+    //W
+    document.write("<pre>                                       ⠀⠀⠀<button onclick=bt_buttonW() onmouseover=bt_buttonWSign() onmouseout=bt_buttonWSignOut() id='bt_buttonW'>[ <span style='text-decoration: underline;'>W</span>.Gold upgrade+<span id='stoneBoxW'></span> <span style='background-color:#ffff00'>-<span id='buttonWCost'></span></span> ]</button>");
+    document.write("<span id='bt_buttonWSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Gold increasing 10% probability + 1", "buttonSignC_buttonW")+"</span></pre>\n\n");
+    function bt_buttonWSign() { bt_Sign('bt_buttonWSign', 'buttonSignC_buttonW'); }
+    function bt_buttonWSignOut() { bt_SignOut('bt_buttonWSign', 'buttonSignC_buttonW'); } bt_buttonWSignOut();
+    function bt_buttonW() {
+        if ( gold >= 40*(3**stoneW) ) {
+            gold -= 40*(3**stoneW);
+            stoneW++;
+        }
+        update();
+    }
+
+    //E
+    document.write("<pre>                                       ⠀⠀⠀<button onclick=bt_buttonE() onmouseover=bt_buttonESign() onmouseout=bt_buttonESignOut() id='bt_buttonE'>[ <span style='text-decoration: underline;'>E</span>.Auto upgrade+<span id='stoneBoxE'></span> <span style='background-color:#e0e0e0'>-<span id='buttonECost'></span></span> ]</button>");
+    document.write("<span id='bt_buttonESign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get auto Stone + 1", "buttonSignC_buttonE")+"</span></pre>\n\n");
+    function bt_buttonESign() { bt_Sign('bt_buttonESign', 'buttonSignC_buttonE'); }
+    function bt_buttonESignOut() { bt_SignOut('bt_buttonESign', 'buttonSignC_buttonE'); } bt_buttonESignOut();
+    function bt_buttonE() {
+        if ( stone >= 1000*(2**stoneE) ) {
+            stone -= 1000*(2**stoneE);
+            autoStone++;
+            stoneE++;
+        }
+        update();
+    }
+
+    //R 
+    document.write("<pre>                                       ⠀⠀⠀<button onclick=bt_buttonR() onmouseover=bt_buttonRSign() onmouseout=bt_buttonRSignOut() id='bt_buttonR'>[ <span style='text-decoration: underline;'>R</span>.Gold2 upgrade+<span id='stoneBoxR'></span> <span style='background-color:#ffff00'>-<span id='buttonRCost'></span></span> ]</button>");
+    document.write("<span id='bt_buttonRSign' class='nono'>"+buttonSign(0, 0, 0, 0, 0, 0, "get Gold amount + 1", "buttonSignC_buttonR")+"</span></pre>\n\n");
+    function bt_buttonRSign() { bt_Sign('bt_buttonRSign', 'buttonSignC_buttonR'); }
+    function bt_buttonRSignOut() { bt_SignOut('bt_buttonRSign', 'buttonSignC_buttonR'); } bt_buttonRSignOut();
+    function bt_buttonR() {
+        if ( gold >= 500*(3**stoneR) ) {
+            gold -= 500*(3**stoneR);
+            getGold++;
+            stoneR++;
+        }
+        update();
+    }
+
+
+    function bt_Sign(_id, _class) {
+        var element = document.getElementById(_id);
+        element.className = "nono";
+
+        var element = document.getElementById('buttonSign1');
+        if ( element != null && element.className == _class) {element.style.backgroundColor = "#e0e0e0"; element.style.color = "#000000";}
+        var element = document.getElementById('buttonSign2');
+        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffff80"; element.style.color = "#000000";}
+        var element = document.getElementById('buttonSign3');
+        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffC0ff"; element.style.color = "#000000";}
+    }
+    function bt_SignOut(_id, _class) {
+        var element = document.getElementById(_id);
+        element.className = "buttonHide";
+        var element = document.getElementById('buttonSign1');
+        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
+        var element = document.getElementById('buttonSign2');
+        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
+        var element = document.getElementById('buttonSign3');
+        if ( element != null && element.className == _class) {element.style.backgroundColor = "#ffffff"; element.style.color = "#ffffff";}
+    }
+
+    // 인게임 - 단축키 ( alt )
+    window.addEventListener("keydown", keysPressed, false);
+    window.addEventListener("keyup", keysReleased, false);
+    function keysPressed(e) {
+        key[e.keyCode] = true;
+    }
+    function keysReleased(e) {
+        if (key[83]) { // S키
+            document.getElementById('bt_getStone').click();
+            e.preventDefault();	
+        }
+        else if (key[81]) { // Q키
+            document.getElementById('bt_buttonQ').click();
+            e.preventDefault();	
+        }
+        else if (key[87]) { // W키
+            document.getElementById('bt_buttonW').click();
+            e.preventDefault();	
+        }
+        else if (key[69]) { // E키
+            document.getElementById('bt_buttonE').click();
+            e.preventDefault();	
+        }
+        else if (key[82]) { // R키
+            document.getElementById('bt_buttonR').click();
+            e.preventDefault();	
+        }
+        key[e.keyCode] = false;
+    }
+
+    //업데이트
+    update()
+    function update () {
+        stone += autoStone;
+        gold += autoGold;
+        gem += autoGem;
+
+        var element = document.getElementById('stoneTColor');
+        if ( idkStone == "0" ) {
+            element.style.backgroundColor = '#ffffff';
+            document.getElementById("stoneT").textContent = "     ";
+            document.getElementById("plusStone").textContent = "    ";
+            document.getElementById("stone").textContent = " ";
+            if ( stone > 0 ) { idkStone="1"; }
+        } else {
+            element.style.backgroundColor = '#b0b0b0';
+            document.getElementById("stoneT").textContent = "STONE";
+            document.getElementById("plusStone").textContent = "(+"+autoStone+")";
+            document.getElementById("stone").textContent = stone;
+        }
+
+        var element = document.getElementById('goldTColor');
+        if ( idkGold == "0" ) {
+            element.style.backgroundColor = '#ffffff';
+            document.getElementById("goldT").textContent = "     ";
+            document.getElementById("plusGold").textContent = "    ";
+            document.getElementById("gold").textContent = " ";
+            if ( gold > 0 ) { idkGold="1"; }
+        } else {
+            element.style.backgroundColor = '#ffff00';
+            document.getElementById("goldT").textContent = "GOLD ";
+            document.getElementById("plusGold").textContent = "(+"+autoGold+")"
+            document.getElementById("gold").textContent = gold;
+        }
+
+        var element = document.getElementById('gemTColor');
+        if ( idkGem == "0" ) {
+            element.style.backgroundColor = '#ffffff';
+            document.getElementById("gemT").textContent = "     ";
+            document.getElementById("plusGem").textContent = "    ";
+            document.getElementById("gem").textContent = " ";
+            if ( gem > 0 ) { idkGem="1"; }
+        } else {
+            element.style.backgroundColor = '#ff80ff';
+            document.getElementById("gemT").textContent = "GEM  ";
+            document.getElementById("plusGem").textContent = "(+"+autoGem+")";
+            document.getElementById("gem").textContent = gem;
+        }
+
+        document.getElementById("stoneLen").textContent = " ".repeat(25 - Number(String(stone).length+String(autoStone).length));
+        document.getElementById("goldLen").textContent = " ".repeat(25 - Number(String(gold).length+String(autoGold).length));
+        document.getElementById("gemLen").textContent = " ".repeat(25 - Number(String(gem).length+String(autoGem).length));
+
+        document.getElementById("stoneBox").textContent = 10+stoneW*10;
+        document.getElementById("stoneBoxSt").textContent = 1+stoneQ;
+        document.getElementById("stoneBoxGo").textContent = 1+stoneR;
+        document.getElementById("stoneBoxQ").textContent = stoneQ;
+        document.getElementById("stoneBoxW").textContent = stoneW;
+        document.getElementById("stoneBoxE").textContent = stoneE;
+        document.getElementById("stoneBoxR").textContent = stoneR;
+        document.getElementById("buttonQCost").textContent = 100*(2**stoneQ);
+        document.getElementById("buttonWCost").textContent = 40*(3**stoneW);
+        document.getElementById("buttonECost").textContent = 1000*(2**stoneE);
+        document.getElementById("buttonRCost").textContent = 500*(3**stoneR);
+        
+        document.getElementById("pickaxeName").textContent = pickaxeName[pickaxeType]+"+"+pickaxeEvo[pickaxeType]+"⠀⠀";
+        document.getElementById("pickaxe1").textContent = " ".repeat(40-3-Number(String(pickaxeName[pickaxeType]).length+String(pickaxeEvo[pickaxeType]).length));
+        document.getElementById("pickaxeEvo").textContent = "★".repeat(Number(pickaxeEvoStar[pickaxeType]));
+        document.getElementById("pickaxe2").textContent = " ".repeat(40-2-pickaxeEvoStar[pickaxeType]*2)+"⠀⠀";
+        var temp = pickaxeSign(pickaxeType);
+        document.getElementById("pickaxeUpgrade").textContent = temp;
+        document.getElementById("pickaxe3").textContent =  " ".repeat(40-2-Number(String(temp).length))+"⠀⠀";
+        
+        console.log("update()");
+    }
+
+    var update_main = setInterval(update, 1000);
+    </script>
+</body>
+</html>
